@@ -2,7 +2,7 @@ extends CharacterBody2D
 class_name Ball
 
 @export var gravity: float = 200. 
-@export var max_speed: float = 1000.
+@export var max_speed: float = 700.
 
 @onready var sprites: Node2D = $Sprites
 @onready var sprite_timer: Timer = $Timer
@@ -30,7 +30,7 @@ func _bounce(collision: KinematicCollision2D) -> Vector2:
 	sprite_id = 1
 	var normal = collision.get_normal()
 	var collider = collision.get_collider()
-	collider.bounce()
+	collider.bounce(self)
 	
 	var normal_velocity = velocity.dot(normal) * normal
 	var tangential_velocity = velocity - normal_velocity

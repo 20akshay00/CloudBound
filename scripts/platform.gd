@@ -30,6 +30,10 @@ func _ready() -> void:
 	if _is_stormy: 
 		sprite.modulate = "aeaeaeff"
 
+func _process(delta: float) -> void:
+	velocity -= delta * 50. * velocity.normalized()
+	move_and_slide()
+
 func _set_state():
 	collision_shape.set_deferred("disabled", not _is_active)
 	if _is_active: 
@@ -40,15 +44,17 @@ func _set_state():
 	else:
 		self.modulate.a = 0.2
 
-func bounce():
+func bounce(body: Ball):
 	if not _is_shrinking:
-		#if sprite_tween: sprite_tween.kill()
 		sprite_tween = get_tree().create_tween()
 		sprite_tween.tween_property(sprite, "scale", Vector2(0.9, 1.1), bounce_time)
 		sprite_tween.tween_property(sprite, "scale", Vector2(1.1, 0.9), bounce_time)
 		sprite_tween.tween_property(sprite, "scale", Vector2(1., 1.), bounce_time/2)
 		
-		if not _is_stormy: sprite_tween.tween_callback(shrink)
+		if _is_stormy:
+			velocity = 0.3 * body.velocity
+		else:
+			sprite_tween.tween_callback(shrink)
 
 func shrink():
 	_is_shrinking = true
