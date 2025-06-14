@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://bghfo7q85syid"]
+
+[ext_resource type="Script" uid="uid://5js6v0jffsyh" path="res://scripts/ball.gd" id="1_cxlvu"]
+[ext_resource type="Texture2D" uid="uid://divas7utman04" path="res://assets/raindrop.png" id="2_cxlvu"]
+[ext_resource type="Texture2D" uid="uid://3dyra0te186g" path="res://assets/raindrop_happy.png" id="2_f7cbr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7s4qf"]
+radius = 60.0
+
+[node name="Ball" type="CharacterBody2D"]
+script = ExtResource("1_cxlvu")
+
+[node name="Sprites" type="Node2D" parent="."]
+
+[node name="Mad" type="Sprite2D" parent="Sprites"]
+position = Vector2(0, -26)
+texture = ExtResource("2_cxlvu")
+
+[node name="Happy" type="Sprite2D" parent="Sprites"]
+visible = false
+position = Vector2(0, -26)
+texture = ExtResource("2_f7cbr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_7s4qf")
+
+[node name="Timer" type="Timer" parent="."]

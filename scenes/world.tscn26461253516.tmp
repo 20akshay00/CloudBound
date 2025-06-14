@@ -1,0 +1,54 @@
+[gd_scene load_steps=7 format=3 uid="uid://ycp2r0w1tjwg"]
+
+[ext_resource type="PackedScene" uid="uid://bghfo7q85syid" path="res://scenes/ball.tscn" id="1_nnsk1"]
+[ext_resource type="PackedScene" uid="uid://c7xlnwse4aa4h" path="res://scenes/platform_spawner.tscn" id="3_4wyf3"]
+[ext_resource type="PackedScene" uid="uid://b3ap6o5bwieqc" path="res://scenes/wall.tscn" id="3_qfnet"]
+[ext_resource type="Script" uid="uid://cljw50xx1xbdu" path="res://scripts/lightning_spawner.gd" id="4_71j4m"]
+[ext_resource type="Script" uid="uid://db6crlnyn1qax" path="res://scripts/game_manager.gd" id="4_k0juu"]
+[ext_resource type="PackedScene" uid="uid://drm00cek58y1u" path="res://scenes/lightning_arc.tscn" id="5_71j4m"]
+
+[node name="World" type="Node2D"]
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("4_k0juu")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -967.0
+offset_top = -679.0
+offset_right = 963.0
+offset_bottom = 402.0
+size_flags_horizontal = 4
+color = Color(0.521569, 0.639216, 1, 1)
+
+[node name="Ball" parent="." instance=ExtResource("1_nnsk1")]
+position = Vector2(0, -141)
+
+[node name="Camera2D" type="Camera2D" parent="Ball"]
+limit_left = -960
+limit_right = 960
+position_smoothing_enabled = true
+
+[node name="Walls" type="Node2D" parent="Ball"]
+position = Vector2(0, 141)
+
+[node name="Right" parent="Ball/Walls" node_paths=PackedStringArray("wall") instance=ExtResource("3_qfnet")]
+position = Vector2(985, 5)
+scale = Vector2(-1, -1)
+wall = NodePath("../Left")
+
+[node name="Left" parent="Ball/Walls" node_paths=PackedStringArray("wall") instance=ExtResource("3_qfnet")]
+position = Vector2(-984, 16)
+wall = NodePath("../Right")
+
+[node name="PlatformSpawner" parent="." node_paths=PackedStringArray("platforms", "clouds") instance=ExtResource("3_4wyf3")]
+platforms = NodePath("../Clouds")
+clouds = NodePath("../Clouds")
+
+[node name="Clouds" type="Node2D" parent="."]
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="LightningSpawner" type="Node2D" parent="."]
+script = ExtResource("4_71j4m")
+
+[node name="LightningArc" parent="." instance=ExtResource("5_71j4m")]

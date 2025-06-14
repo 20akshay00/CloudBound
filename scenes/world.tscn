@@ -1,0 +1,57 @@
+[gd_scene load_steps=8 format=3 uid="uid://ycp2r0w1tjwg"]
+
+[ext_resource type="Texture2D" uid="uid://dbwk0oiretg5y" path="res://assets/background.png" id="1_i7141"]
+[ext_resource type="PackedScene" uid="uid://bghfo7q85syid" path="res://scenes/ball.tscn" id="1_nnsk1"]
+[ext_resource type="PackedScene" uid="uid://c7xlnwse4aa4h" path="res://scenes/platform_spawner.tscn" id="3_4wyf3"]
+[ext_resource type="PackedScene" uid="uid://b3ap6o5bwieqc" path="res://scenes/wall.tscn" id="3_qfnet"]
+[ext_resource type="Script" uid="uid://cljw50xx1xbdu" path="res://scripts/lightning_spawner.gd" id="4_71j4m"]
+[ext_resource type="Script" uid="uid://db6crlnyn1qax" path="res://scripts/game_manager.gd" id="4_k0juu"]
+[ext_resource type="PackedScene" uid="uid://drm00cek58y1u" path="res://scenes/lightning_arc.tscn" id="5_71j4m"]
+
+[node name="World" type="Node2D"]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+visible = false
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(1960, 1080)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(0, -147)
+texture = ExtResource("1_i7141")
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="Right" parent="Walls" node_paths=PackedStringArray("wall") instance=ExtResource("3_qfnet")]
+position = Vector2(1090, 0)
+scale = Vector2(-1, -1)
+wall = NodePath("../Left")
+
+[node name="Left" parent="Walls" node_paths=PackedStringArray("wall") instance=ExtResource("3_qfnet")]
+position = Vector2(-1090, 0)
+wall = NodePath("../Right")
+dir = 1
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("4_k0juu")
+
+[node name="Ball" parent="." instance=ExtResource("1_nnsk1")]
+position = Vector2(0, -141)
+
+[node name="Camera2D" type="Camera2D" parent="Ball"]
+limit_left = -960
+limit_right = 960
+position_smoothing_enabled = true
+
+[node name="PlatformSpawner" parent="." node_paths=PackedStringArray("platforms", "clouds", "ball") instance=ExtResource("3_4wyf3")]
+platforms = NodePath("../Clouds")
+clouds = NodePath("../Clouds")
+ball = NodePath("../Ball")
+
+[node name="LightningSpawner" type="Node2D" parent="."]
+script = ExtResource("4_71j4m")
+lightning_scene = ExtResource("5_71j4m")
+
+[node name="Clouds" type="Node2D" parent="."]
+
+[node name="UI" type="CanvasLayer" parent="."]

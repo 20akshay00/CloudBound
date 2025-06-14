@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://b3ap6o5bwieqc"]
+
+[ext_resource type="Script" uid="uid://dpl4jluyuon4t" path="res://scripts/wall.gd" id="1_wykyb"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_wykyb"]
+normal = Vector2(-1, 0)
+
+[node name="Wall" type="Area2D"]
+script = ExtResource("1_wykyb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("WorldBoundaryShape2D_wykyb")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
