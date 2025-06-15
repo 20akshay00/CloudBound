@@ -22,8 +22,9 @@ func _on_cloud_removed(cloud: Platform) -> void:
 	if (cloud == cloud1) or (cloud == cloud2):
 		_on_death()
 
-func _on_cloud_unpaired(cloud1: Platform, cloud2: Platform) -> void:
-	_on_death()
+func _on_cloud_unpaired(clouda: Platform, cloudb: Platform) -> void:
+	if cloud1 == clouda and cloud2 == cloudb:
+		_on_death()
 
 func _set_points():
 	collision_shape.a = cloud1.global_position
@@ -33,6 +34,9 @@ func _set_points():
 	sprite.scale.y = dist.length() / sprite.texture.get_width()
 	sprite.rotation = atan2(dist.y, dist.x) + PI/2
 	sprite.position = collision_shape.a - dist/2
+	
+	if dist.length() > 2 * cloud1.get_node("DetectionArea/CollisionShape2D").shape.radius:
+		_on_death()
 
 func _on_death():
-	queue_free()
+	if self: queue_free()

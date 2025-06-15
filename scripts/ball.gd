@@ -2,10 +2,11 @@ extends CharacterBody2D
 class_name Ball
 
 @export var gravity: float = 200. 
-@export var max_speed: float = 700.
+@export var max_speed: float = 800.
 
 @onready var sprites: Node2D = $Sprites
 @onready var sprite_timer: Timer = $Timer
+
 var sprite_timeout: float = 1.
 var sprite_id: int = 0:
 	get:
@@ -16,15 +17,21 @@ var sprite_id: int = 0:
 		sprites.get_child(val).show()
 		sprite_id = val
 
+var external_acceleration := Vector2.ZERO
+
 func _ready() -> void:
 	sprite_timer.timeout.connect(func(): sprite_id = 0)
 
 func _process(delta: float) -> void:
 	velocity.y += gravity * delta
+	velocity += external_acceleration * delta
+	
 	var collision = move_and_collide(velocity * delta)
 	if collision: _bounce(collision)
 	velocity = velocity.limit_length(max_speed)
 	rotation = velocity.angle() - PI/2
+
+	print(velocity.length())
 
 func _bounce(collision: KinematicCollision2D) -> Vector2:
 	sprite_id = 1

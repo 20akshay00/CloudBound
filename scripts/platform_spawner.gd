@@ -1,14 +1,13 @@
 extends Node2D
 
 @export var platform_scene: PackedScene
-@export var platforms: Node2D
 @export var clouds: Node2D 
 @export var ball: Ball
 
 var min_distance: float = 100.
 var platform: Platform = null
 
-var coefficient_of_restitution: float = 1.2
+var coefficient_of_restitution: float = 1.5
 var platform_angle: float = 0.
 var rotation_sensitivity: float = 5.
 var restitution_sensitivity: float = 0.1
@@ -44,7 +43,7 @@ func _create_platform() -> void:
 
 func _activate_platfom() -> void:
 	platform._is_active = true
-	platform.reparent(platforms)
+	platform.reparent(clouds)
 	EventManager.cloud_added.emit(platform)
 	_create_platform()
 	

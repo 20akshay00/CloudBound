@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://ce0ggb4crw3wn"]
+
+[ext_resource type="Script" uid="uid://c607gyxdxihu7" path="res://scripts/air_draft.gd" id="1_pn8fh"]
+[ext_resource type="Texture2D" uid="uid://bhmnldtwr0i33" path="res://assets/attractor_particle.png" id="2_7vviv"]
+[ext_resource type="Texture2D" uid="uid://dh5tbnurojbgg" path="res://assets/alpha_curve_texture.tres" id="3_gowvf"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mohvs"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+gravity = Vector3(0, 0, 0)
+alpha_curve = ExtResource("3_gowvf")
+
+[node name="AirDraft" type="Area2D"]
+collision_layer = 5
+collision_mask = 5
+gravity_space_override = 3
+gravity = 0.0
+script = ExtResource("1_pn8fh")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+amount = 50
+texture = ExtResource("2_7vviv")
+lifetime = 2.0
+process_material = SubResource("ParticleProcessMaterial_mohvs")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

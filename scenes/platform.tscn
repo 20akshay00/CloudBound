@@ -10,9 +10,9 @@ size = Vector2(204.5, 55)
 radius = 372.012
 
 [node name="Platform" type="CharacterBody2D" node_paths=PackedStringArray("collision_shape")]
+collision_mask = 0
 script = ExtResource("1_nlgqw")
 collision_shape = NodePath("CollisionShape2D")
-_is_stormy = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -13)
