@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://drm00cek58y1u" path="res://scenes/lightning_arc.tscn" id="5_71j4m"]
 [ext_resource type="PackedScene" uid="uid://ce0ggb4crw3wn" path="res://scenes/air_draft.tscn" id="8_4mrxx"]
 [ext_resource type="PackedScene" uid="uid://pbn0te3y2mvy" path="res://scenes/platform.tscn" id="8_7r4gi"]
-[ext_resource type="Texture2D" uid="uid://rn3ket228v4u" path="res://assets/water.png" id="10_w7kh3"]
+[ext_resource type="Script" uid="uid://1n4qphl74rfo" path="res://scripts/ocean_sprite.gd" id="11_e3hyu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7r4gi"]
 size = Vector2(678, 228)
@@ -92,7 +92,12 @@ enable_particles = false
 position = Vector2(14, 10)
 shape = SubResource("WorldBoundaryShape2D_7r4gi")
 
-[node name="Sprite2D" type="Sprite2D" parent="Ocean"]
-visible = false
-position = Vector2(0, 500)
-texture = ExtResource("10_w7kh3")
+[node name="OceanSprite" type="Node2D" parent="Ocean"]
+script = ExtResource("11_e3hyu")
+
+[node name="Line2D" type="Line2D" parent="Ocean/OceanSprite"]
+points = PackedVector2Array(1745, -901, 1591, -817)
+default_color = Color(0.317647, 0.317647, 0.317647, 1)
+
+[node name="Polygon2D" type="Polygon2D" parent="Ocean/OceanSprite"]
+color = Color(0.458824, 0.717647, 1, 0.764706)
