@@ -4,6 +4,8 @@ extends Node2D
 @export var cloud_scene: PackedScene
 @export var player: Ball
 
+@export var snowcloud_scene: PackedScene
+
 var pairs = []
 
 func _ready() -> void:
@@ -34,6 +36,12 @@ func _process(delta: float) -> void:
 		for pos in [Vector2(300., -400.), Vector2(-300., -500.)]:
 			var cloud = cloud_scene.instantiate()
 			cloud._is_stormy = true
+			cloud.global_position = player.global_position + pos
+			add_child(cloud)
+			cloud.grow()
+	if Input.is_action_just_pressed("decrease_bounce"):
+		for pos in [Vector2(300., -400.), Vector2(-300., -500.)]:
+			var cloud = snowcloud_scene.instantiate()
 			cloud.global_position = player.global_position + pos
 			add_child(cloud)
 			cloud.grow()

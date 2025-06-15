@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bghfo7q85syid"]
+[gd_scene load_steps=6 format=3 uid="uid://bghfo7q85syid"]
 
 [ext_resource type="Script" uid="uid://5js6v0jffsyh" path="res://scripts/ball.gd" id="1_cxlvu"]
 [ext_resource type="Texture2D" uid="uid://divas7utman04" path="res://assets/raindrop.png" id="2_cxlvu"]
 [ext_resource type="Texture2D" uid="uid://3dyra0te186g" path="res://assets/raindrop_happy.png" id="2_f7cbr"]
+[ext_resource type="Texture2D" uid="uid://de87f7hppifus" path="res://assets/drop_frozen.png" id="4_4dx81"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7s4qf"]
 radius = 60.0
@@ -21,7 +22,15 @@ visible = false
 position = Vector2(0, -26)
 texture = ExtResource("2_f7cbr")
 
+[node name="Frozen" type="Sprite2D" parent="Sprites"]
+visible = false
+position = Vector2(0, -29)
+texture = ExtResource("4_4dx81")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_7s4qf")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="SpriteTimer" type="Timer" parent="."]
+
+[node name="FreezeTimer" type="Timer" parent="."]
+wait_time = 7.0

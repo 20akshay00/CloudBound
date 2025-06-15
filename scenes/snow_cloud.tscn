@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://b4eubs6q05wlj"]
+
+[ext_resource type="Script" uid="uid://d152iw46fiu4" path="res://scripts/snow_cloud.gd" id="1_vp3ni"]
+[ext_resource type="Texture2D" uid="uid://cpsms6jp4lmbv" path="res://assets/cloud.png" id="2_ag08b"]
+[ext_resource type="Texture2D" uid="uid://c3px1dn0ua4ky" path="res://assets/snowflake.png" id="2_kfibg"]
+
+[sub_resource type="Curve" id="Curve_ag08b"]
+_data = [Vector2(0.747093, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_kfibg"]
+curve = SubResource("Curve_ag08b")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_r25ki"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(120, 0, 0)
+angle_min = 1.07288e-05
+angle_max = 360.0
+direction = Vector3(0.5, 1, 0)
+spread = 0.0
+initial_velocity_min = 25.0
+initial_velocity_max = 75.0
+gravity = Vector3(0, 10, 0)
+alpha_curve = SubResource("CurveTexture_kfibg")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kfibg"]
+size = Vector2(204.5, 55)
+
+[node name="SnowCloud" type="Area2D"]
+script = ExtResource("1_vp3ni")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(0, 30)
+amount = 10
+texture = ExtResource("2_kfibg")
+lifetime = 2.0
+process_material = SubResource("ParticleProcessMaterial_r25ki")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.745098, 0.937255, 1, 1)
+position = Vector2(0, -13)
+texture = ExtResource("2_ag08b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_kfibg")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

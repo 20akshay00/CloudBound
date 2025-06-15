@@ -24,7 +24,8 @@ var external_acceleration := Vector2.ZERO
 
 var cloud_sprites := [
 	preload("res://assets/cloud1.png"),
-	preload("res://assets/cloud2.png")	
+	preload("res://assets/cloud2.png"),
+	preload("res://assets/cloud3.png")	
 ]
 
 func _ready() -> void:
@@ -48,16 +49,18 @@ func _set_state():
 		self.modulate.a = 0.2
 
 func bounce(body: Ball):
-	if not _is_shrinking:
-		sprite_tween = get_tree().create_tween()
-		sprite_tween.tween_property(sprite, "scale", Vector2(0.9, 1.1), bounce_time)
-		sprite_tween.tween_property(sprite, "scale", Vector2(1.1, 0.9), bounce_time)
-		sprite_tween.tween_property(sprite, "scale", Vector2(1., 1.), bounce_time/2)
-		
-		if _is_stormy:
-			velocity = 0.3 * body.velocity
-		else:
-			sprite_tween.tween_callback(shrink)
+	if body._is_frozen:
+		shrink()
+	elif not _is_shrinking:
+			sprite_tween = get_tree().create_tween()
+			sprite_tween.tween_property(sprite, "scale", Vector2(0.9, 1.1), bounce_time)
+			sprite_tween.tween_property(sprite, "scale", Vector2(1.1, 0.9), bounce_time)
+			sprite_tween.tween_property(sprite, "scale", Vector2(1., 1.), bounce_time/2)
+			
+			if _is_stormy:
+				velocity = 0.3 * body.velocity
+			else:
+				sprite_tween.tween_callback(shrink)
 
 func shrink():
 	_is_shrinking = true
